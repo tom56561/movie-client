@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  MenuItem,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -24,6 +25,7 @@ const registerSchema = yup.object().shape({
   location: yup.string().required("required"),
   occupation: yup.string().required("required"),
   picture: yup.string().required("required"),
+  role: yup.string().oneOf(['regular', 'critic'], 'Invalid role').required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -39,6 +41,7 @@ const initialValuesRegister = {
   location: "",
   occupation: "",
   picture: "",
+  role: "regular", // Default role
 };
 
 const initialValuesLogin = {
@@ -173,6 +176,20 @@ const Form = () => {
                   helperText={touched.occupation && errors.occupation}
                   sx={{ gridColumn: "span 4" }}
                 />
+                <TextField
+                  select
+                  label="Role"
+                  value={values.role || "regular"} 
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  name="role"
+                  error={Boolean(touched.role) && Boolean(errors.role)}
+                  helperText={touched.role && errors.role}
+                  sx={{ gridColumn: "span 4" }}
+                >
+                  <MenuItem value="regular">Regular</MenuItem>
+                  <MenuItem value="critic">Critic</MenuItem>
+                </TextField>
                 <Box
                   gridColumn="span 4"
                   border={`1px solid ${palette.neutral.medium}`}
