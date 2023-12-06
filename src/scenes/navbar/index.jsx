@@ -58,7 +58,7 @@ const Navbar = () => {
         >
           Sociopedia
         </Typography>
-        {isNonMobileScreens && (
+        {(
           <FlexBetween
             backgroundColor={neutralLight}
             borderRadius="9px"
