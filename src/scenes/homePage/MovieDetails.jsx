@@ -13,7 +13,8 @@ const KEY = "ea351ee5";
 
 export default function MovieDetails({
   selectedId,
-  onCloseMovie,
+  onSeeMine,
+  onReturn,
   onAddWatched,
   watched,
 }) {
@@ -48,8 +49,6 @@ export default function MovieDetails({
     Genre: genre,
   } = movie;
 
-  console.log(movie);
-
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -62,10 +61,10 @@ export default function MovieDetails({
       countRatingDecisions: countRef.current,
     };
     onAddWatched(newWatchedMovie);
-    onCloseMovie();
+    onSeeMine();
   }
 
-  useKey("Escape", onCloseMovie);
+  useKey("Escape", onReturn);
 
   useEffect(() => {
     async function getMovieDetails() {
@@ -137,8 +136,8 @@ export default function MovieDetails({
                   You rated this movie {watchedUserRating} <span>⭐</span>
                 </p>
               )}
-              <Button variant="outlined" color="error" onClick={onCloseMovie}>
-                Go to movie you have watched
+              <Button variant="outlined" color="success" onClick={onSeeMine}>
+                See movie you watched
               </Button>
             </div>
 

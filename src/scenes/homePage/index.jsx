@@ -13,23 +13,26 @@ import WatchedMoviesList from "./WatchedMoviesList";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import SearchBar from "./SearchBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMovies } from "../../hooks/useMovies";
 import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
 const HomePage = () => {
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.user);
   const [query, setQuery] = useState("");
   const { movies, isLoading, error } = useMovies(query);
   const [selectedId, setSelectedId] = useState(null);
   const [watched, setWatched] = useLocalStorageState([], "watched");
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  // const [seeing, setSeeing] = useState(false);
+  const [detailPage, setDetailPage] = useState(null);
   function handleSelectMovie(id) {
-    setSelectedId((selectedId) => (id === selectedId ? null : id));
-  }
-
-  function handleCloseMovie() {
-    setSelectedId(null);
+    if (id === selectedId) {
+      setDetailPage(detailPage === null ? 0 : detailPage ^ 1);
+      return;
+    }
+    setSelectedId(id);
+    setDetailPage(0);
   }
 
   function handleAddWatched(movie) {
@@ -39,9 +42,20 @@ const HomePage = () => {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
+
   return (
     <Box>
       <Navbar />
+      {!isNonMobileScreens && detailPage !== null && (
+        <button
+          className="btn-back"
+          onClick={() => {
+            setDetailPage(detailPage === 0 ? null : detailPage - 1);
+          }}
+        >
+          ←
+        </button>
+      )}
       <Box
         width="100%"
         padding="2rem 6%"
@@ -56,28 +70,12 @@ const HomePage = () => {
           </Box>
         )}
 
-        <Box
-          flexBasis={isNonMobileScreens ? "42%" : undefined}
-        >
-          {/* Middle Top: Search Bar */}
-          <SearchBar query={query} setQuery={setQuery} />
-          {/* Middle Middle: Post Function */}
-          {/* <MyPostWidget picturePath={picturePath} /> */}
-          {/* Middle Down: Others Posts  */}
-          {/* <PostsWidget userId={_id} /> */}
-          <Box>
-            {isLoading && <Loader />}
-            {!isLoading && !error && (
-              <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
-            )}
-            {error && <ErrorMessage message={error} />}
-          </Box>
-        </Box>
-        <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
-          {selectedId ? (
+        {!isNonMobileScreens && selectedId && detailPage !== null ? (
+          detailPage === 0 ? (
             <MovieDetails
               selectedId={selectedId}
-              onCloseMovie={handleCloseMovie}
+              onSeeMine={() => setDetailPage(1)}
+              onReturn={() => setSelectedId(null)}
               onAddWatched={handleAddWatched}
               watched={watched}
             />
@@ -89,8 +87,41 @@ const HomePage = () => {
                 onDeleteWatched={handleDeleteWatched}
               />
             </>
-          )}
-        </Box>
+          )
+        ) : (
+          <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
+            <SearchBar query={query} setQuery={setQuery} />
+            <Box>
+              {isLoading && <Loader />}
+              {!isLoading && !error && (
+                <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
+              )}
+              {error && <ErrorMessage message={error} />}
+            </Box>
+          </Box>
+        )}
+
+        {isNonMobileScreens && (
+          <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
+            {(selectedId || detailPage !== 0) && (detailPage === 0 ? (
+              <MovieDetails
+                selectedId={selectedId}
+                onSeeMine={() => setDetailPage(1)}
+                onReturn={() => setSelectedId(null)}
+                onAddWatched={handleAddWatched}
+                watched={watched}
+              />
+            ) : (
+              <>
+                <WatchedSummary watched={watched} />
+                <WatchedMoviesList
+                  watched={watched}
+                  onDeleteWatched={handleDeleteWatched}
+                />
+              </>
+            ))}
+          </Box>
+        )}
         {isNonMobileScreens && (
           <Box flexBasis="26%">
             {/* Right: Advert and Friends */}
