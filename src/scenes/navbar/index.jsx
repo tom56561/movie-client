@@ -11,7 +11,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import {
-  Search,
   Message,
   DarkMode,
   LightMode,
@@ -58,7 +57,7 @@ const Navbar = () => {
         >
           Sociopedia
         </Typography>
-        {(
+        {/* {(
           <FlexBetween
             backgroundColor={neutralLight}
             borderRadius="9px"
@@ -70,7 +69,7 @@ const Navbar = () => {
               <Search />
             </IconButton>
           </FlexBetween>
-        )}
+        )} */}
       </FlexBetween>
 
       {/* DESKTOP NAV */}
