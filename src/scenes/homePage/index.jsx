@@ -2,8 +2,6 @@ import { Box, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
 import UserWidget from "scenes/widgets/UserWidget";
-import MyPostWidget from "scenes/widgets/MyPostWidget";
-import PostsWidget from "scenes/widgets/PostsWidget";
 import MovieList from "./MovieList";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
@@ -13,7 +11,7 @@ import WatchedMoviesList from "./WatchedMoviesList";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import SearchBar from "./SearchBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMovies } from "../../hooks/useMovies";
 import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
