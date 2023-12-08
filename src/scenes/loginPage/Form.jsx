@@ -41,7 +41,7 @@ const initialValuesRegister = {
   location: "",
   occupation: "",
   picture: "",
-  role: "regular", // Default role
+  role: "",
 };
 
 const initialValuesLogin = {
@@ -179,7 +179,7 @@ const Form = () => {
                 <TextField
                   select
                   label="Role"
-                  value={values.role || "regular"} 
+                  value={values.role} 
                   onChange={handleChange}
                   onBlur={handleBlur}
                   name="role"
