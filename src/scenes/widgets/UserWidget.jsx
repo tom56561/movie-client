@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ManageAccountsOutlined,
   EditOutlined,
@@ -11,6 +12,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
@@ -75,9 +77,14 @@ const UserWidget = ({ userId, picturePath }) => {
             <Typography color={medium}>{friends.length} friends</Typography>
           </Box>
         </FlexBetween>
-        <ManageAccountsOutlined />
-      </FlexBetween>
 
+        <ManageAccountsOutlined
+          onClick={(event) => {
+            event.stopPropagation(); // Stop event propagation
+            navigate(`/editProfile/${userId}`);
+          }}
+        />
+      </FlexBetween>
       <Divider />
 
       {/* SECOND ROW */}
@@ -145,6 +152,7 @@ const UserWidget = ({ userId, picturePath }) => {
         </FlexBetween>
       </Box>
     </WidgetWrapper>
+
   );
 };
 
