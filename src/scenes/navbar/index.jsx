@@ -56,7 +56,7 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+          CineSocial Hub
         </Typography>
         {/* {(
           <FlexBetween
