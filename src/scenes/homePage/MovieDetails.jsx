@@ -21,7 +21,8 @@ export default function MovieDetails({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
-  const { _id, picturePath } = useSelector((state) => state.user);
+  // const { _id, picturePath } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const countRef = useRef(0);
 
   useEffect(
@@ -75,7 +76,7 @@ export default function MovieDetails({
       );
       const data = await res.json();
       if (data.Poster === "N/A") {
-        data.Poster = "../../public/resources/Movie Poster.png";
+        data.Poster = "../../../assets/Movie Poster.png";
       }
       setMovie(data);
       setIsLoading(false);
@@ -102,7 +103,7 @@ export default function MovieDetails({
       ) : (
         <>
           <header>
-            <img src={poster} alt={`Poster of ${title} movie`} />
+            <img src={poster ?? "../../../assets/Movie Poster.png"} alt={`Poster of ${title} movie`} />
             <div className="details-overview">
               <h2>{title}</h2>
               <p>
@@ -117,7 +118,7 @@ export default function MovieDetails({
           </header>
           {/* <p>{avgRating}</p> */}
           <div>
-            <div className="rating">
+            {user && <div className="rating">
               {!isWatched ? (
                 <>
                   <StarRating
@@ -139,7 +140,7 @@ export default function MovieDetails({
               <Button variant="outlined" color="success" onClick={onSeeMine}>
                 See movie you watched
               </Button>
-            </div>
+            </div>}
 
             <p>
               <em>{plot}</em>
@@ -147,10 +148,10 @@ export default function MovieDetails({
             <p>Starring {actors}</p>
             <p>Directed by {director}</p>
           </div>
-           {/* Middle Middle: Post Function */}
-          <MyPostWidget picturePath={picturePath} />
+          {/* Middle Middle: Post Function */}
+          {user && <MyPostWidget picturePath={user.picturePath} />}
           {/* Middle Down: Others Posts  */}
-          <PostsWidget userId={_id} />
+          {user && <PostsWidget userId={user._id} />}
         </>
       )}
     </div>

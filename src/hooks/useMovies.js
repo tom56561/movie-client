@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
-const KEY = "ea351ee5"
+// const KEY = "ea351ee5"
+const KEY = "b2453ff5"
 
 export function useMovies(query) {
   const [movies, setMovies] = useState([])
@@ -31,7 +32,7 @@ export function useMovies(query) {
             throw new Error("Movie not found");
           }
           data.Search.map((movie) => {
-            movie.Poster = movie.Poster === "N/A" ? "../../public/resources/Movie Poster.png" : movie.Poster;
+            movie.Poster = movie.Poster === "N/A" ? "../../assets/Movie Poster.png" : movie.Poster;
             return movie;
           });
           setMovies(data.Search);

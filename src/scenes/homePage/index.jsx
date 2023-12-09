@@ -1,4 +1,4 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, Typography, useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
 import UserWidget from "scenes/widgets/UserWidget";
@@ -14,15 +14,17 @@ import SearchBar from "./SearchBar";
 import { useState } from "react";
 import { useMovies } from "../../hooks/useMovies";
 import { useLocalStorageState } from "../../hooks/useLocalStorageState";
+import Form from "scenes/loginPage/Form";
 
 const HomePage = () => {
-  const { _id, picturePath } = useSelector((state) => state.user);
+  // const { _id, picturePath } = useSelector((state) => state.user);
+  const theme = useTheme();
+  const user = useSelector((state) => state.user);
   const [query, setQuery] = useState("");
   const { movies, isLoading, error } = useMovies(query);
   const [selectedId, setSelectedId] = useState(null);
   const [watched, setWatched] = useLocalStorageState([], "watched");
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  // const [seeing, setSeeing] = useState(false);
   const [detailPage, setDetailPage] = useState(null);
   function handleSelectMovie(id) {
     if (id === selectedId) {
@@ -61,13 +63,27 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        {isNonMobileScreens && (
-          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-            {/* Left: User Profile  */}
-            <UserWidget userId={_id} picturePath={picturePath} />
-          </Box>
-        )}
+        {/* 1st part: Login Form or User Widget */}
+        {isNonMobileScreens &&
+          (user === null ? (
+            <Box
+              width={isNonMobileScreens ? "20%" : "93%"}
+              p="2rem"
+              borderRadius="1.5rem"
+              backgroundColor={theme.palette.background.alt}
+            >
+              <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
+                Welcome to Socipedia, the Social Media for Sociopaths!
+              </Typography>
+              <Form />
+            </Box>
+          ) : (
+            <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+              <UserWidget userId={user._id} picturePath={user.picturePath} />
+            </Box>
+          ))}
 
+        {/* 2nd part: Search Bar and Movie List */}
         {!isNonMobileScreens && selectedId && detailPage !== null ? (
           detailPage === 0 ? (
             <MovieDetails
@@ -99,33 +115,38 @@ const HomePage = () => {
           </Box>
         )}
 
-        {isNonMobileScreens && (
+        {/* 3rd part: movie details or summary */}
+        {isNonMobileScreens && (user !== null || detailPage === 0) && (
           <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
-            {(selectedId || detailPage !== 0) && (detailPage === 0 ? (
-              <MovieDetails
-                selectedId={selectedId}
-                onSeeMine={() => setDetailPage(1)}
-                onReturn={() => setSelectedId(null)}
-                onAddWatched={handleAddWatched}
-                watched={watched}
-              />
-            ) : (
-              <>
-                <WatchedSummary watched={watched} />
-                <WatchedMoviesList
+            {(selectedId || detailPage !== 0) &&
+              (detailPage === 0 ? (
+                <MovieDetails
+                  selectedId={selectedId}
+                  onSeeMine={() => setDetailPage(1)}
+                  onReturn={() => setSelectedId(null)}
+                  onAddWatched={handleAddWatched}
                   watched={watched}
-                  onDeleteWatched={handleDeleteWatched}
                 />
-              </>
-            ))}
+              ) : (
+                user !== null && (
+                  <div>
+                    <WatchedSummary watched={watched} />
+                    <WatchedMoviesList
+                      watched={watched}
+                      onDeleteWatched={handleDeleteWatched}
+                    />
+                  </div>
+                )
+              ))}
           </Box>
         )}
+
+        {/* 4th part: Advert and Friends */}
         {isNonMobileScreens && (
           <Box flexBasis="26%">
-            {/* Right: Advert and Friends */}
             <AdvertWidget />
             <Box m="2rem 0" />
-            <FriendListWidget userId={_id} />
+            {user !== null && <FriendListWidget userId={user._id} />}
           </Box>
         )}
       </Box>
