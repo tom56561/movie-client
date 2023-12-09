@@ -28,7 +28,7 @@ const EditProfile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/users/${userId}`, {
+                const response = await fetch(`http://localhost:3001/profile/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 if (response.ok) {
@@ -46,7 +46,7 @@ const EditProfile = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         setSubmitting(true);
         try {
-            const response = await fetch(`http://localhost:3001/users/${userId}`, {
+            const response = await fetch(`http://localhost:3001/profile/${userId}`, {
                 method: 'PATCH', // Use PATCH here
                 headers: {
                     'Content-Type': 'application/json',
