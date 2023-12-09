@@ -4,6 +4,7 @@ import {
   EditOutlined,
   LocationOnOutlined,
   WorkOutlineOutlined,
+  EmailOutlined,
 } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "components/UserImage";
@@ -19,6 +20,7 @@ const UserWidget = ({ userId, picturePath }) => {
   const { palette } = useTheme();
   const navigate = useNavigate();
   const token = useSelector((state) => state.token);
+  const loggedInUserId = useSelector((state) => state.user._id);
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
@@ -45,6 +47,7 @@ const UserWidget = ({ userId, picturePath }) => {
     lastName,
     location,
     occupation,
+    email,
     viewedProfile,
     impressions,
     friends,
@@ -93,10 +96,16 @@ const UserWidget = ({ userId, picturePath }) => {
           <LocationOnOutlined fontSize="large" sx={{ color: main }} />
           <Typography color={medium}>{location}</Typography>
         </Box>
-        <Box display="flex" alignItems="center" gap="1rem">
+        <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
           <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
           <Typography color={medium}>{occupation}</Typography>
         </Box>
+        {loggedInUserId === userId && (
+          <Box display="flex" alignItems="center" gap="1rem">
+            <EmailOutlined fontSize="large" sx={{ color: main }} />
+            <Typography color={medium}>{email}</Typography>
+          </Box>
+        )}
       </Box>
 
       <Divider />
