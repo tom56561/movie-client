@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, Avatar } from "@mui/material";
+
 
 const UserImage = ({ image, size = "60px" }) => {
   return (
@@ -8,8 +9,9 @@ const UserImage = ({ image, size = "60px" }) => {
         width={size}
         height={size}
         alt="user"
-        src={`http://localhost:3001/assets/${image}`}
+        src={`${process.env.REACT_APP_BASE_API}/assets/${image}`}
       />
+      {/* <Avatar alt="Remy Sharp" src={`${process.env.REACT_APP_BASE_API}/assets/${image}`} size="lg" /> */}
     </Box>
   );
 };

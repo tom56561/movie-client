@@ -65,7 +65,11 @@ const HomePage = () => {
       >
         {/* 1st part: Login Form or User Widget */}
         {isNonMobileScreens &&
-          (user === null ? (
+          (user ? (
+            <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+              <UserWidget userId={user._id} picturePath={user.picturePath} />
+            </Box>
+          ) : (
             <Box
               width={isNonMobileScreens ? "20%" : "93%"}
               p="2rem"
@@ -76,10 +80,6 @@ const HomePage = () => {
                 Welcome to Socipedia, the Social Media for Sociopaths!
               </Typography>
               <Form />
-            </Box>
-          ) : (
-            <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-              <UserWidget userId={user._id} picturePath={user.picturePath} />
             </Box>
           ))}
 
@@ -146,7 +146,7 @@ const HomePage = () => {
           <Box flexBasis="26%">
             <AdvertWidget />
             <Box m="2rem 0" />
-            {user !== null && <FriendListWidget userId={user._id} />}
+            {user && <FriendListWidget userId={user._id} />}
           </Box>
         )}
       </Box>

@@ -12,20 +12,20 @@ const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
   const token = useSelector((state) => state.token);
+  const me = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-
-  const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/profile/${userId}`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    setUser(data);
-  };
-
+  const friends = useSelector((state) => state.user.friends);
   useEffect(() => {
+    const getUser = async () => {
+      const response = await fetch(`http://localhost:3001/profile/${userId}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setUser(data);
+    };
     getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [token, friends, userId]);
 
   if (!user) return null;
 
@@ -50,7 +50,7 @@ const ProfilePage = () => {
         >
           <MyPostWidget picturePath={user.picturePath} />
           <Box m="2rem 0" />
-          <PostsWidget userId={userId} isProfile />
+          <PostsWidget userId={userId} isProfile viewer={me._id} />
         </Box>
       </Box>
     </Box>

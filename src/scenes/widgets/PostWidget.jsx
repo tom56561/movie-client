@@ -10,7 +10,7 @@ import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "state";
+import { updatePosts, setPosts } from "state";
 
 const PostWidget = ({
   postId,
@@ -22,6 +22,7 @@ const PostWidget = ({
   userPicturePath,
   likes,
   comments,
+  viewer,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
+  const posts = useSelector((state) => state.posts);
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -44,16 +46,28 @@ const PostWidget = ({
       body: JSON.stringify({ userId: loggedInUserId }),
     });
     const updatedPost = await response.json();
-    dispatch(setPost({ post: updatedPost }));
+    dispatch(updatePosts({ post: updatedPost }));
+  };
+
+  const deletePost = async () => {
+    const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (response.status === 200) {
+        dispatch(setPosts({posts: posts.filter((post) => post._id !== postId)}));
+    }
   };
 
   return (
     <WidgetWrapper m="2rem 0">
       <Friend
+        viewer={viewer}
         friendId={postUserId}
         name={name}
         subtitle={location}
         userPicturePath={userPicturePath}
+        onDelete={deletePost}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}

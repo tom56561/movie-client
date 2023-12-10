@@ -13,6 +13,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 
 const UserWidget = ({ userId, picturePath }) => {
@@ -26,11 +27,11 @@ const UserWidget = ({ userId, picturePath }) => {
   const main = palette.neutral.main;
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3001/profile/${userId}`, {
-      method: "GET",
+    const response = await axios.get(`${process.env.REACT_APP_BASE_API}/profile/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    const data = await response.json();
+    const data = response.data;
+    // console.log(data);
     setUser(data);
   };
 
