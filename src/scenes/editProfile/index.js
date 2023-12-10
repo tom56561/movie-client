@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import { TextField, Button, Box } from '@mui/material';
+import { TextField, Button, Box, useMediaQuery, useTheme } from '@mui/material';
 
 const editProfileSchema = yup.object({
     firstName: yup.string().required("First name is required"),
@@ -67,6 +67,9 @@ const EditProfile = () => {
         }
     };
 
+    const theme = useTheme();
+    const isNonMobileScreens = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <Formik
             initialValues={initialValues}
@@ -75,18 +78,26 @@ const EditProfile = () => {
             enableReinitialize
         >
             {({ isSubmitting }) => (
-                <Form>
-                    <Box display="grid" gap="20px">
-                        <Field as={TextField} name="firstName" label="First Name" fullWidth />
-                        <Field as={TextField} name="lastName" label="Last Name" fullWidth />
-                        <Field as={TextField} name="email" type="email" label="Email" fullWidth />
-                        <Field as={TextField} name="location" label="Location" fullWidth />
-                        <Field as={TextField} name="occupation" label="Occupation" fullWidth />
-                        <Button type="submit" color="primary" variant="contained" disabled={isSubmitting}>
-                            Save Changes
-                        </Button>
-                    </Box>
-                </Form>
+                <Box
+                    width={isNonMobileScreens ? "50%" : "93%"}
+                    p="2rem"
+                    m="2rem auto"
+                    borderRadius="1.5rem"
+                    backgroundColor={theme.palette.background.alt}
+                >
+                    <Form>
+                        <Box display="grid" gap="20px">
+                            <Field as={TextField} name="firstName" label="First Name" fullWidth />
+                            <Field as={TextField} name="lastName" label="Last Name" fullWidth />
+                            <Field as={TextField} name="email" type="email" label="Email" fullWidth />
+                            <Field as={TextField} name="location" label="Location" fullWidth />
+                            <Field as={TextField} name="occupation" label="Occupation" fullWidth />
+                            <Button type="submit" color="primary" variant="contained" disabled={isSubmitting}>
+                                Save Changes
+                            </Button>
+                        </Box>
+                    </Form>
+                </Box>
             )}
         </Formik>
     );
