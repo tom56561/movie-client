@@ -17,7 +17,7 @@ const ProfilePage = () => {
   const friends = useSelector((state) => state.user.friends);
   useEffect(() => {
     const getUser = async () => {
-      const response = await fetch(`http://localhost:3001/profile/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_API}/profile/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
