@@ -23,7 +23,7 @@ const HomePage = () => {
   const [query, setQuery] = useState("");
   const { movies, isLoading, error } = useMovies(query);
   const [selectedId, setSelectedId] = useState(null);
-  const [watched, setWatched] = useLocalStorageState([], "watched");
+  const [watched, setWatched] = useLocalStorageState([], user?._id);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const [detailPage, setDetailPage] = useState(null);
   function handleSelectMovie(id) {

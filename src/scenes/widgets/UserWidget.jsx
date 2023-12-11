@@ -27,10 +27,6 @@ const UserWidget = ({ userId, picturePath }) => {
   const main = palette.neutral.main;
 
   useEffect(() => {
-    if (userId === me._id) {
-      setUser(me);
-      return;
-    }
     const getUser = async () => {
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_API}/profile/${userId}`,

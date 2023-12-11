@@ -21,7 +21,7 @@ const Friend = ({ friend, onDelete, isPost = true }) => {
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-  const doIknowHim = user.friends?.find((fid) => fid === friendId);
+  const doIknowHim = user?.friends?.find((fid) => fid === friendId);
 
   const patchFriend = async () => {
     const response = await fetch(
