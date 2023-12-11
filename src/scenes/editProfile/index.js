@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import { TextField, Button, Box, useMediaQuery, useTheme } from "@mui/material";
+import { setLogin } from "state";
 
 const editProfileSchema = yup.object({
   firstName: yup.string().required("First name is required"),
@@ -24,6 +25,7 @@ const EditProfile = () => {
     location: "",
     occupation: "",
   });
+  const dispach = useDispatch();
 
   const [userStr, setUserStr] = useState(JSON.stringify(initialValues));
 
@@ -64,6 +66,10 @@ const EditProfile = () => {
       );
 
       if (response.ok) {
+        const userData = await response.json();
+        if (userData.user._id === userId) {
+          dispach(setLogin({ user: userData.user, token: token.current }));
+        }
         navigate(`/profile/${userId}`);
       } else {
         console.error("Failed to update profile");

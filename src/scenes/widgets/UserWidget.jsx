@@ -81,12 +81,14 @@ const UserWidget = ({ userId, picturePath }) => {
           </Box>
         </FlexBetween>
 
-        <ManageAccountsOutlined
-          onClick={(event) => {
-            event.stopPropagation(); // Stop event propagation
-            navigate(`/editProfile/${userId}`);
-          }}
-        />
+        {me._id === userId && (
+          <ManageAccountsOutlined
+            onClick={(event) => {
+              event.stopPropagation(); // Stop event propagation
+              navigate(`/editProfile/${userId}`);
+            }}
+          />
+        )}
       </FlexBetween>
       <Divider />
 
@@ -144,7 +146,7 @@ const UserWidget = ({ userId, picturePath }) => {
               <Typography color={medium}>Social Network</Typography>
             </Box>
           </FlexBetween>
-          <EditOutlined sx={{ color: main }} />
+          {me._id === userId && <EditOutlined sx={{ color: main }} />}
         </FlexBetween>
 
         <FlexBetween gap="1rem">
@@ -157,7 +159,7 @@ const UserWidget = ({ userId, picturePath }) => {
               <Typography color={medium}>Network Platform</Typography>
             </Box>
           </FlexBetween>
-          <EditOutlined sx={{ color: main }} />
+          {me._id === userId && <EditOutlined sx={{ color: main }} />}
         </FlexBetween>
       </Box>
     </WidgetWrapper>
