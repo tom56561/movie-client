@@ -11,9 +11,9 @@ import WatchedMoviesList from "./WatchedMoviesList";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import SearchBar from "./SearchBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMovies } from "../../hooks/useMovies";
-import { useLocalStorageState } from "../../hooks/useLocalStorageState";
+// import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 import Form from "scenes/loginPage/Form";
 
 const HomePage = () => {
@@ -23,7 +23,7 @@ const HomePage = () => {
   const [query, setQuery] = useState("");
   const { movies, isLoading, error } = useMovies(query);
   const [selectedId, setSelectedId] = useState(null);
-  const [watched, setWatched] = useLocalStorageState([], user?._id);
+  const [watched, setWatched] = useState([]);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const [detailPage, setDetailPage] = useState(null);
   function handleSelectMovie(id) {
@@ -42,6 +42,19 @@ const HomePage = () => {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
+
+  useEffect(() => {
+    if (!user) return;
+    setWatched(JSON.parse(localStorage.getItem(user._id)) || []);
+  }, [user]);
+
+  useEffect(
+    () => {
+      if (!user) return;
+      localStorage.setItem(user._id, JSON.stringify(watched));
+    },
+    [watched, user]
+  );
 
   return (
     <Box>

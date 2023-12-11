@@ -9,6 +9,10 @@ body,
   font-family: "Rubik", sans-serif;
 }
 
+.scrollable-element::-webkit-scrollbar {
+  display: none;
+}
+
 /* :root {
   --color-primary: #6741d9;
   --color-primary-light: #7950f2;
@@ -176,6 +180,7 @@ body,
 
 .list img {
   width: 125%;
+  border-radius: 0.9rem;
   grid-row: 1 / -1;
 }
 
@@ -343,8 +348,8 @@ body,
 }
 
 .btn-back {
-  position: absolute;
-  top: 12rem;
+  position: fixed;
+  top: 7rem;
   left: 0.6rem;
   /* height: 3.2rem; */
   aspect-ratio: 1;
@@ -355,7 +360,7 @@ body,
   color: var(--color-background-500);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
   font-family: sans-serif;
-  font-size: 2.4rem;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   z-index: 999;

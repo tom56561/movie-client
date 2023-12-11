@@ -20,6 +20,7 @@ function ScrollableList({ items }) {
   }, []);
   return (
     <Box
+      className="scrollable-element"
       ref={listRef}
       sx={{
         width: "100%",

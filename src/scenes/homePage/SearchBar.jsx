@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { useKey } from "../../hooks/useKey";
 import { Clear } from "@mui/icons-material";
@@ -9,6 +9,10 @@ export default function SearchBar({ query, setQuery }) {
   const inputEl = useRef(null);
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
+
+  useEffect(() => {
+    inputEl.current.focus();
+  }, []);
 
   useKey("Enter", function () {
     if (document.activeElement === inputEl.current) return;
