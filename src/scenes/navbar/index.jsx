@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
+// import ClearFriendsBtn from "testing_components/ClearFriendsButton";
+// import SeeFriendsBox from "testing_components/SeeFriendsBox";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -39,7 +41,6 @@ const Navbar = () => {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
   const fullName = `${user?.firstName} ${user?.lastName}`;
 
   return (
@@ -68,7 +69,11 @@ const Navbar = () => {
             <Link
               to="/post"
               color="primary"
-              style={{ textDecoration: "none", color: "inherit", fontSize: "16px" }}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                fontSize: "16px",
+              }}
             >
               Post
             </Link>
@@ -80,11 +85,17 @@ const Navbar = () => {
           >
             <Link
               to={"/home"}
-              style={{ textDecoration: "none", color: "inherit", fontSize: "16px"}}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                fontSize: "16px",
+              }}
             >
               Search
             </Link>
           </Button>
+          {/* {user && <ClearFriendsBtn />} */}
+          {/* {user && <SeeFriendsBox />} */}
         </Breadcrumbs>
       </FlexBetween>
 

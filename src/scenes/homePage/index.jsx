@@ -36,6 +36,7 @@ const HomePage = () => {
   }
 
   function handleAddWatched(movie) {
+    console.log(movie);
     setWatched((watched) => [...watched, movie]);
   }
 

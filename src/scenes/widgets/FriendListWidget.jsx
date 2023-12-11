@@ -2,11 +2,9 @@ import { Box, Typography, useTheme } from "@mui/material";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setFriends } from "state";
+import { useSelector } from "react-redux";
 
 const FriendListWidget = ({ userId }) => {
-  const dispatch = useRef(useDispatch());
   const { palette } = useTheme();
   const token = useRef(useSelector((state) => state.token));
   const myFriends = useSelector((state) => state.user.friends);
@@ -22,7 +20,6 @@ const FriendListWidget = ({ userId }) => {
         }
       );
       const data = await response.json();
-      // dispatch.current(setFriends({ friends: data }));
       setFriends(data);
     };
     getFriends();
@@ -43,9 +40,11 @@ const FriendListWidget = ({ userId }) => {
           <Friend
             key={friend._id}
             friendId={friend._id}
-            name={`${friend.firstName} ${friend.lastName}`}
-            subtitle={friend.occupation}
-            userPicturePath={friend.picturePath}
+            friend={{
+              ...friend,
+              name: friend.firstName + " " + friend.lastName,
+            }}
+            isPost={false}
           />
         ))}
       </Box>

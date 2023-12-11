@@ -1,11 +1,17 @@
-import Movie from "./Movie"
-
+import Movie from "./Movie";
+import ScrollableList from "components/ScrollableList";
 export default function MovieList({ movies, onSelectMovie }) {
   return (
-    <ul className="list list-movies">
-      {movies?.map((movie) => (
-        <Movie key={movie.imdbID} movie={movie} onSelectMovie={onSelectMovie} />
-      ))}
-    </ul>
-  )
+    <div className="list list-movies">
+      <ScrollableList
+        items={movies?.map((movie) => (
+          <Movie
+            key={movie.imdbID}
+            movie={movie}
+            onSelectMovie={onSelectMovie}
+          />
+        ))}
+      />
+    </div>
+  );
 }

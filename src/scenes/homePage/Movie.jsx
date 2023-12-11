@@ -1,14 +1,19 @@
 export default function Movie({ movie, onSelectMovie }) {
   return (
-    <li key={movie.imdbID} onClick={() => onSelectMovie(movie.imdbID)}>
+    <div
+      key={movie.imdbID}
+      onClick={() => onSelectMovie(movie.imdbID)}
+      id="movieBox"
+    >
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
-      <h3>{movie.Title}</h3>
-      <div>
+
+      <div style={{marginLeft:"5px"}}>
+        <h3>{movie.Title}</h3>
         <p>
           <span>📆</span>
           <span>{movie.Year}</span>
         </p>
       </div>
-    </li>
-  )
+    </div>
+  );
 }

@@ -84,7 +84,6 @@ export default function MovieDetails({
       res = await axios.get(
         `${process.env.REACT_APP_BASE_API}/movie/details/${selectedId}`
       );
-      // console.log(res.data);
       setMovie(data);
       setRelatedData(res.data);
       setIsLoading(false);

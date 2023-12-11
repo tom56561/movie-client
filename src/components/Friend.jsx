@@ -2,27 +2,26 @@ import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setFriends } from "state";
+import { setMyFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import MoreButton from "./MoreButton";
 
-const Friend = ({viewer, friendId, name, subtitle, userPicturePath, onDelete }) => {
+const Friend = ({ friend, onDelete, isPost = true }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const friendId = friend?._id;
+  const name = friend.name;
+  const subtitle = friend?.occupation ?? friend?.location ?? "";
+  const userPicturePath = friend?.picturePath;
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
-  const friends = user?.friends;
-
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-  const obj = viewer ? viewer : friendId;
-
-  const isFriend = friends?.find((friend) => friend._id === user._id);
-  // console.log(isFriend, friends, friendId);
+  const doIknowHim = user.friends?.find((fid) => fid === friendId);
 
   const patchFriend = async () => {
     const response = await fetch(
@@ -36,7 +35,7 @@ const Friend = ({viewer, friendId, name, subtitle, userPicturePath, onDelete }) 
       }
     );
     const data = await response.json();
-    dispatch(setFriends({ friends: data }));
+    dispatch(setMyFriends({ friends: data.map((f) => f._id) }));
   };
 
   return (
@@ -71,9 +70,9 @@ const Friend = ({viewer, friendId, name, subtitle, userPicturePath, onDelete }) 
           </Box>
         </Box>
       </FlexBetween>
-      {user && user._id !== friendId && (
+      {user && (friendId !== user._id || isPost) && (
         <Box mt={"-1rem"} mr={"-1rem"}>
-          {friendId === user._id ? (
+          {isPost && friendId === user._id ? (
             <MoreButton
               bg={primaryLight}
               color={primaryDark}
@@ -84,7 +83,7 @@ const Friend = ({viewer, friendId, name, subtitle, userPicturePath, onDelete }) 
               onClick={() => patchFriend()}
               sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
             >
-              {isFriend ? (
+              {doIknowHim ? (
                 <PersonRemoveOutlined sx={{ color: primaryDark }} />
               ) : (
                 <PersonAddOutlined sx={{ color: primaryDark }} />

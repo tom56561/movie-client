@@ -10,7 +10,6 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
 const PostPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.user);
-
   return (
     <Box>
       <Navbar />
@@ -29,7 +28,9 @@ const PostPage = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           <MyPostWidget picturePath={picturePath} />
-          <PostsWidget userId={_id} />
+          <Box >
+            <PostsWidget userId={_id} />
+          </Box>
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis="26%">

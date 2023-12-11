@@ -3,27 +3,22 @@ import ReviewWidget from "./ReviewWidget";
 const ReviewsWidget = ({ reviews, imdbId, onRefresh }) => {
   return (
     <>
-      {reviews.map(
-        ({
-          id,
-          content,
-          date,
-          user,
-        }) => (
-          <ReviewWidget
-            key={id}
-            postId={id}
-            postUserId={user.userId}
-            name={`${user.name}`}
-            date={date}
-            content={content}
-            location={user.location}
-            picturePath={user.picturePath}
-            onRefresh={onRefresh}
-            imdbId={imdbId}
-          />
-        )
-      )}
+      {reviews.map(({ id, content, date, user }) => (
+        <ReviewWidget
+          key={id}
+          postId={id}
+          friend={{
+            _id: user.userId,
+            name: user.name,
+            location: user.location,
+            picturePath: user.picturePath,
+          }}
+          date={date}
+          content={content}
+          onRefresh={onRefresh}
+          imdbId={imdbId}
+        />
+      ))}
     </>
   );
 };

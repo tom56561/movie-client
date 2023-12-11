@@ -14,15 +14,11 @@ import { updatePosts, setPosts } from "state";
 
 const PostWidget = ({
   postId,
-  postUserId,
-  name,
-  description,
-  location,
+  friend,
+  content,
   picturePath,
-  userPicturePath,
   likes,
   comments,
-  viewer,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -62,15 +58,12 @@ const PostWidget = ({
   return (
     <WidgetWrapper m="2rem 0">
       <Friend
-        viewer={viewer}
-        friendId={postUserId}
-        name={name}
-        subtitle={location}
-        userPicturePath={userPicturePath}
+        
+        friend={friend}
         onDelete={deletePost}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
-        {description}
+        {content}
       </Typography>
       {picturePath && (
         <img
@@ -109,7 +102,7 @@ const PostWidget = ({
       {isComments && (
         <Box mt="0.5rem">
           {comments.map((comment, i) => (
-            <Box key={`${name}-${i}`}>
+            <Box key={`${friend.name}-${i}`}>
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
                 {comment}

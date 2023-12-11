@@ -10,12 +10,9 @@ import { useSelector } from "react-redux";
 
 const ReviewWidget = ({
   postId,
-  postUserId,
-  name,
+  friend,
   date,
   content,
-  location,
-  picturePath,
   imdbId,
   onRefresh,
 }) => {
@@ -42,10 +39,7 @@ const ReviewWidget = ({
   return (
     <WidgetWrapper m="2rem 0">
       <Friend
-        friendId={postUserId}
-        name={name}
-        subtitle={location}
-        userPicturePath={picturePath}
+        friend={friend}
         onDelete={deleteReview}
       />
       <Typography color={main} >

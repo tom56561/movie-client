@@ -24,6 +24,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
+import axios from "axios";
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
@@ -46,12 +47,10 @@ const MyPostWidget = ({ picturePath }) => {
       formData.append("picturePath", image.name);
     }
 
-    const response = await fetch(`http://localhost:3001/posts`, {
-      method: "POST",
+    const response = await axios.post(`http://localhost:3001/posts`, formData, {
       headers: { Authorization: `Bearer ${token}` },
-      body: formData,
     });
-    const posts = await response.json();
+    const posts = await response.data;
     dispatch(setPosts({ posts }));
     setImage(null);
     setPost("");

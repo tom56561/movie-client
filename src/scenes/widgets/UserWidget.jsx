@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from "react";
 import {
   ManageAccountsOutlined,
   EditOutlined,
@@ -13,35 +13,38 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-
+import axios from "axios";
+import Loader from "scenes/homePage/Loader";
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
+  const token = useRef(useSelector((state) => state.token));
+  const me = useSelector((state) => state.user);
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
 
-  const getUser = async () => {
-    const response = await axios.get(`${process.env.REACT_APP_BASE_API}/profile/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = response.data;
-    // console.log(data);
-    setUser(data);
-  };
-
   useEffect(() => {
+    if (userId === me._id) {
+      setUser(me);
+      return;
+    }
+    const getUser = async () => {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_API}/profile/${userId}`,
+        {
+          headers: { Authorization: `Bearer ${token.current}` },
+        }
+      );
+      const data = response.data;
+      setUser(data);
+    };
     getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, me]);
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return <Loader />;
 
   const {
     firstName,
@@ -101,7 +104,7 @@ const UserWidget = ({ userId, picturePath }) => {
           <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
           <Typography color={medium}>{occupation}</Typography>
         </Box>
-        {loggedInUserId === userId && (
+        {me._id === userId && (
           <Box display="flex" alignItems="center" gap="1rem">
             <EmailOutlined fontSize="large" sx={{ color: main }} />
             <Typography color={medium}>{email}</Typography>
@@ -162,7 +165,6 @@ const UserWidget = ({ userId, picturePath }) => {
         </FlexBetween>
       </Box>
     </WidgetWrapper>
-
   );
 };
 

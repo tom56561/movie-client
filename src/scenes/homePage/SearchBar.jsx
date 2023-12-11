@@ -1,8 +1,8 @@
 import { useRef } from "react";
 
 import { useKey } from "../../hooks/useKey";
-import { Search } from "@mui/icons-material";
-import { InputBase, IconButton, useTheme } from "@mui/material";
+import { Clear } from "@mui/icons-material";
+import { Input, IconButton, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import { Box } from "@mui/material";
 export default function SearchBar({ query, setQuery }) {
@@ -29,15 +29,16 @@ export default function SearchBar({ query, setQuery }) {
         gap="3rem"
         padding="0.1rem 1.5rem"
       >
-        <InputBase
+        <Input
           className="search"
+          fullWidth
           placeholder="Search movies..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           ref={inputEl}
         />
         <IconButton onClick={handleSearch}>
-          <Search />
+          <Clear />
         </IconButton>
       </FlexBetween>
     </Box>
