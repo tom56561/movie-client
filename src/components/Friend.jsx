@@ -44,7 +44,6 @@ const Friend = ({ friend, onDelete, isPost = true }) => {
         <Box
           onClick={() => {
             navigate(`/profile/${friendId}`);
-            navigate(0);
           }}
           display="flex"
           mt={"-1rem"}
