@@ -11,7 +11,7 @@ import WatchedMoviesList from "./WatchedMoviesList";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import SearchBar from "./SearchBar";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useMovies } from "../../hooks/useMovies";
 // import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 import Form from "scenes/loginPage/Form";
@@ -43,12 +43,12 @@ const HomePage = () => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
-  useEffect(() => {
+  useMemo(() => {
     if (!user) return;
     setWatched(JSON.parse(localStorage.getItem(user._id)) || []);
   }, [user]);
 
-  useEffect(
+  useMemo(
     () => {
       if (!user) return;
       localStorage.setItem(user._id, JSON.stringify(watched));
