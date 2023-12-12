@@ -62,7 +62,7 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+          CineSocial Hub
         </Typography>
         <Breadcrumbs aria-label="breadcrumb">
           <Button
