@@ -17,7 +17,7 @@ function MoreButton({ bg, color, onDelete }) {
 
   return (
     <>
-      <IconButton sx={{ backgroundColor: bg }} onClick={handleClick}>
+      <IconButton sx={{ backgroundColor: bg, p: "0.6rem", marginLeft: "0.2rem" }} onClick={handleClick}>
         <MoreHoriz sx={{ color: color }} />
       </IconButton>
       <Menu

@@ -1,4 +1,4 @@
-import { Box, Avatar } from "@mui/material";
+import { Box } from "@mui/material";
 
 
 const UserImage = ({ image, size = "60px" }) => {

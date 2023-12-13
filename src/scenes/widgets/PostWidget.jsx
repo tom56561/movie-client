@@ -23,7 +23,7 @@ const PostWidget = ({
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
+  const loggedInUserId = useSelector((state) => state.user?._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
   const posts = useSelector((state) => state.posts);
@@ -58,7 +58,6 @@ const PostWidget = ({
   return (
     <WidgetWrapper m="2rem 0">
       <Friend
-        
         friend={friend}
         onDelete={deletePost}
       />

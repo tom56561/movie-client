@@ -89,6 +89,11 @@ const Friend = ({ friend, onDelete, isPost = true }) => {
               )}
             </IconButton>
           )}
+          {isPost && user.role === 'admin' && user._id !== friendId && <MoreButton
+              bg={primaryLight}
+              color={primaryDark}
+              onDelete={onDelete}
+            />}
         </Box>
       )}
     </FlexBetween>

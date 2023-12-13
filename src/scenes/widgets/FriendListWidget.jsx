@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const FriendListWidget = ({ userId }) => {
   const { palette } = useTheme();
   const token = useRef(useSelector((state) => state.token));
-  const myFriends = useSelector((state) => state.user.friends);
+  const myFriends = useSelector((state) => state.user?.friends);
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {

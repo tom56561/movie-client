@@ -15,9 +15,9 @@ const ProfilePage = () => {
   const token = useRef(useSelector((state) => state.token));
   const me = useRef(useSelector((state) => state.user));
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const friends = useSelector((state) => state.user.friends);
+  const friends = useSelector((state) => state.user?.friends);
   useEffect(() => {
-    if (userId === me.current._id) {
+    if (me.current && userId === me.current._id) {
       setUser(me.current);
       return;
     }
@@ -51,7 +51,7 @@ const ProfilePage = () => {
           </Box>
         </Box>
         <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
-          {userId === me.current._id ? (
+          {userId === me.current?._id ? (
             <MyPostWidget picturePath={user.picturePath} />
           ) : (
             <Alert severity="info" style={{ fontSize: "16px" }}>
