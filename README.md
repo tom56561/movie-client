@@ -1,3 +1,42 @@
+# CineSocial Hub
+
+Web Link: https://movie-social-hub.netlify.app
+
+Backend Repositories: https://github.com/tom56561/movie-server
+
+The frontend is hosted on Netlify, and the backend is hosted on Render.
+
+# Features
+
+Our platform offers a rich set of features designed to enhance the user experience, incorporating the latest trends in web development and UI/UX design:
+
+- **Login and Register**: Secure authentication system allowing users to create and access their accounts.
+- **User Profile**: Personalized user profiles where members can view and edit their information.
+- **Friends and Follow Feature**: Connect with friends and follow their profiles to stay updated on their activities.
+- **Movie Search**: Integration with a third-party API to search for movies, providing users with a vast library of films to explore.
+- **Comments**: Users can leave comments on each movie, fostering a community of movie enthusiasts.
+- **Posts Feature**: Members can create posts, sharing their thoughts, reviews, or movie recommendations with the community.
+- **UI/UX Design**: A modern and user-friendly interface that adheres to the latest UI/UX design trends, ensuring an enjoyable experience for all users.
+- **Dark and Light Mode**: A dynamic design layout that allows users to switch between dark and light modes, catering to personal preferences and reducing eye strain.
+
+# Preview
+### Login Page
+![](src/images/login.png)
+
+### Search Page
+![](src/images/search.png)
+
+### Post Page
+![](src/images/post.png)
+
+### Profile Page
+![](src/images/Profile.png)
+
+### Dark Mode Page
+Click the button in the red circle to switch Light/Dark Mode
+![](src/images/dark%20mode.png)
+
+
 # UI Style Guide
 
 This document outlines the color design tokens and theme settings for the website's user interface, aligned with 2023 UI trends.
